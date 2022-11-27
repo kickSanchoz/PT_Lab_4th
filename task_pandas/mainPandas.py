@@ -1,3 +1,5 @@
+import copy
+
 import numpy as np
 import pandas as pd
 import matplotlib
@@ -112,11 +114,12 @@ def normalizeAgeAndPrice():
 
     """
     global df
-    df["Age"] = (df["Age"] - df["Age"].min()) / (df["Age"].max() - df["Age"].min())
-    df["Fare"] = (df["Fare"] - df["Fare"].min()) / (df["Fare"].max() - df["Fare"].min())
+    df2 = copy.deepcopy(df)
+    df2["Age"] = (df2["Age"] - df2["Age"].min()) / (df2["Age"].max() - df2["Age"].min())
+    df2["Fare"] = (df2["Fare"] - df2["Fare"].min()) / (df2["Fare"].max() - df2["Fare"].min())
 
     print("8. Отнормируйте значения признаков \"Возраст\" и \"Цена билета\". Выведите на экран полученный датасет.\n",
-          df, "\n")
+          df2, "\n")
 
 
 def histSexAndAgeByClass(needShow: bool = False):
@@ -172,7 +175,7 @@ def main():
     scatterBetweenAgeAndPrice(needShow=False)
 
     # 8. Отнормируйте значения признаков "Возраст" и "Цена билета". Выведите на экран полученный датасет.
-    # normalizeAgeAndPrice()
+    normalizeAgeAndPrice()
 
     # 9. Постройте гистограммы распределения пассажиров по полу и по возрасту для каждого класса. Расположите
     # гистограммы одна под другой. Оси абсцисс должны быть однаковыми.
