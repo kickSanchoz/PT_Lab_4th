@@ -55,7 +55,8 @@ def priceDistribution(needShow: bool = False):
     Можно ли сказать, что в данных наблюдаются выбросы?
     """
     if needShow:
-        sns.displot(df["Fare"])
+        # sns.displot(df["Fare"])
+        sns.boxplot(df["Fare"])
         plt.show()
 
     print("3. Можно ли сказать, что в данных наблюдаются выбросы?", "Выброс наблюдаются в дешевых билетах", "\n")
@@ -128,12 +129,13 @@ def histSexAndAgeByClass(needShow: bool = False):
     гистограммы одна под другой. Оси абсцисс должны быть одинаковыми.
     """
     if needShow:
-        fig, ax = plt.subplots(2, 1)
-        # sns.histplot(x=dfAge.index.values, y=dfAge["Age"])
-        sns.histplot(x=df["Pclass"], y=df["is_male"], ax=ax[0], cbar=True)
-        sns.histplot(x=df["Pclass"], y=df["Age"], ax=ax[1], cbar=True)
-        fig.tight_layout()
-
+        # fig, ax = plt.subplots(2, 1)
+        # sns.histplot(x=df["Pclass"], y=df["is_male"], ax=ax[0], cbar=True)
+        # sns.histplot(x=df["Pclass"], y=df["Age"], ax=ax[1], cbar=True)
+        # fig.tight_layout()
+        # plt.show()
+        df.groupby('Pclass')['is_male'].value_counts().unstack().plot.bar()
+        df.groupby('Pclass')['Age'].value_counts().unstack().plot.bar()
         plt.show()
 
     print("9. Гистограммы распределения пассажиров по полу и по возрасту для каждого класса. Расположите "
@@ -141,12 +143,13 @@ def histSexAndAgeByClass(needShow: bool = False):
 
 
 def conclusion():
-     """
-     10. Сделайте выводы по работе.
-     """
-     print("10. Сделайте выводы по работе.\n"
-           "Ответ: В данной лабораторной работе мною были изучены основы работы с pandas и построение графиков "
-           "с помощью seaborn.")
+    """
+    10. Сделайте выводы по работе.
+    """
+    print("10. Сделайте выводы по работе.\n"
+          "Ответ: В данной лабораторной работе мною были изучены основы работы с pandas и построение графиков "
+          "с помощью seaborn.")
+
 
 def main():
     # 1. Определите, содержит ли какой-нибудь столбец датасета пропущенные значения.
@@ -158,6 +161,7 @@ def main():
     # 3. Постройте диаграмму распределения значений цены билета по всем пассажирам. Проинтерпретируйте результат.
     # Можно ли сказать, что в данных наблюдаются выбросы?
     priceDistribution(needShow=False)
+    # priceDistribution(needShow=False)
 
     # 4. Чем больше родственников у человека, тем выше шанс того, что он купит билет третьего класса.
     # ticketClassByRelatives(needShow=True)
@@ -172,6 +176,7 @@ def main():
     oneHotEncoding()
 
     # 7. Постройте диаграмму рассеяния между признаками "Возраст" и "Цена билета". Проинтерпретируйте ответ.
+    # scatterBetweenAgeAndPrice(needShow=True)
     scatterBetweenAgeAndPrice(needShow=False)
 
     # 8. Отнормируйте значения признаков "Возраст" и "Цена билета". Выведите на экран полученный датасет.
